@@ -26,13 +26,13 @@ struct Satellite: Decodable{
 
 final class IssAPI {
     
-    let shared = IssAPI()
+    static let shared = IssAPI()
     
     
     
     
-    ///Method that request datas from issAPI 
-    func request() {
+    ///Method that request datas from issAPI
+    func request(completion: @escaping (Satellite) -> Void ) {
         let session = URLSession.shared
 
         let url = URL(string: "https://api.wheretheiss.at/v1/satellites/25544")
@@ -52,6 +52,7 @@ final class IssAPI {
                     }
                     let datas = try JSONDecoder().decode(Satellite.self, from: data)
                     print(datas)
+                    completion(datas)
                 } catch {
                     print("Deu ruim")
                 }
