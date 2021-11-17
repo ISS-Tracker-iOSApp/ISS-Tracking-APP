@@ -23,6 +23,9 @@ class ViewController: UIViewController, MKMapViewDelegate {
         // Set initial location in Honolulu)
         
         
+        // Teste
+//        self.view.backgroundColor = .cyan
+        
         setupContraints()
         // Do any additional setup after loading the view.
     }
