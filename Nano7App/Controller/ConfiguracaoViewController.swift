@@ -7,7 +7,11 @@
 
 import UIKit
 
-class ConfiguracaoViewController: UIViewController {
+class ConfiguracaoViewController: UITableViewController {
+    let iconReduceAnimation = UIImageView()
+    let textReduceAnimation = UILabel()
+    let toggleReduceAnimation = UISwitch()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,4 +31,8 @@ class ConfiguracaoViewController: UIViewController {
     }
     */
 
+}
+
+extension ConfiguracaoViewController {
+    
 }
