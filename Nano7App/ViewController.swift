@@ -18,7 +18,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Set initial location in Honolulu
+
         setupContraints()
         changeMapButton()
         // Do any additional setup after loading the view.
