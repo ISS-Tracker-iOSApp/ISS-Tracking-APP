@@ -11,7 +11,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
     let annotion = MKPointAnnotation()
     lazy var map : MKMapView = {
         let map = MKMapView()
-        map.mapType = .hybridFlyover
         map.overrideUserInterfaceStyle = .dark
         return map
     }()
@@ -19,14 +18,9 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Set initial location in Honolulu)
-        
-        
-        // Teste
-//        self.view.backgroundColor = .cyan
-        
+
         setupContraints()
+        changeMapButton()
         // Do any additional setup after loading the view.
     }
     
@@ -37,6 +31,8 @@ class ViewController: UIViewController, MKMapViewDelegate {
         pin.title = "ISS here"
         map.addAnnotation(pin)
     }
+    
+    
     
     //function to show custom pin at map
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -57,9 +53,35 @@ class ViewController: UIViewController, MKMapViewDelegate {
         
         annotationView?.image = UIImage(named: "IssIcon")
         
-        
         return annotationView
     }
+    
+    @objc func buttonAction(button: UIButton){
+        if map.mapType == .hybridFlyover {
+            map.mapType = .standard
+        }else{
+            map.mapType = .hybridFlyover
+        }
+        
+    }
+    
+    func changeMapButton(){
+        let button = UIButton(type: .system)
+        button.frame = CGRect(x: 200, y: 200, width: 100, height: 100)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 8
+        button.setTitle("🌎", for: .normal)
+        
+        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        
+        self.view.addSubview(button)
+        
+        //Button constraints
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50).isActive = true
+        button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+    }
+    
     
     
     func setupContraints() {
@@ -72,6 +94,10 @@ class ViewController: UIViewController, MKMapViewDelegate {
         map.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         map.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         map.delegate = self
+    
+        
+        
+
         
         
         let coordinate = CLLocationCoordinate2D(latitude: -42.618332, longitude: 168.68759)
