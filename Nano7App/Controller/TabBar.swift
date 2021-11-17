@@ -19,8 +19,8 @@ class TabBar: UITabBarController {
     
     func setupVCs() {
         viewControllers = [
-            createNavController(for: ViewController(), title: NSLocalizedString("Track", comment: ""), image: UIImage(named: "tab-icon-sat")!),
-            createNavController(for: FavoritosViewController(), title: NSLocalizedString("Favoritos", comment: ""), image: UIImage(systemName: "star")!),
+            createNavController(for: ViewController(), title: NSLocalizedString("Track ISS", comment: ""), image: UIImage(named: "tab-icon-sat")!),
+            createNavController(for: FavoritosViewController(), title: NSLocalizedString("Favoritos", comment: ""), image: UIImage(systemName: "heart")!),
             createNavController(for: ConfiguracaoViewController(), title: NSLocalizedString("Configuração", comment: ""), image: UIImage(systemName: "gearshape")!)
         ]
     }
