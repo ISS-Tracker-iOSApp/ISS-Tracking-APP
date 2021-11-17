@@ -17,6 +17,7 @@
 		6F40F08627457A3C00F74258 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F40F08527457A3C00F74258 /* TabBar.swift */; };
 		6F40F088274582D600F74258 /* FavoritosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F40F087274582D600F74258 /* FavoritosViewController.swift */; };
 		6F40F08A2745832800F74258 /* ConfiguracaoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F40F0892745832800F74258 /* ConfiguracaoViewController.swift */; };
+		6F40F08D2745977300F74258 /* ConfiguracaoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F40F08C2745977300F74258 /* ConfiguracaoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		6F40F08527457A3C00F74258 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		6F40F087274582D600F74258 /* FavoritosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritosViewController.swift; sourceTree = "<group>"; };
 		6F40F0892745832800F74258 /* ConfiguracaoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguracaoViewController.swift; sourceTree = "<group>"; };
+		6F40F08C2745977300F74258 /* ConfiguracaoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguracaoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 		2376A474274426C800ECB3B6 /* Nano7App */ = {
 			isa = PBXGroup;
 			children = (
+				6F40F08B2745975700F74258 /* View */,
 				6F40F084274579FF00F74258 /* Controller */,
 				2376A48C274434FE00ECB3B6 /* Utilities */,
 				2376A475274426C800ECB3B6 /* AppDelegate.swift */,
@@ -93,6 +96,14 @@
 				6F40F0892745832800F74258 /* ConfiguracaoViewController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		6F40F08B2745975700F74258 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6F40F08C2745977300F74258 /* ConfiguracaoView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -165,6 +176,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F40F08D2745977300F74258 /* ConfiguracaoView.swift in Sources */,
 				2376A47A274426C800ECB3B6 /* ViewController.swift in Sources */,
 				6F40F088274582D600F74258 /* FavoritosViewController.swift in Sources */,
 				2376A480274426C800ECB3B6 /* Nano7App.xcdatamodeld in Sources */,
