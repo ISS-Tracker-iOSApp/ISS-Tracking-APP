@@ -10,17 +10,25 @@ import UIKit
 class TabBar: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tabBar.isTranslucent = false
+        self.tabBar.barTintColor = UIColor.black // tab bar icon tint color
+        self.tabBar.backgroundColor = .gray
+        
         view.backgroundColor = .systemBackground
-           UITabBar.appearance().barTintColor = .systemBackground
-           tabBar.tintColor = .label
-           setupVCs()
+        UITabBar.appearance().barTintColor = .systemBackground
+        tabBar.tintColor = .label
+        setupVCs()
+        
+        
+        
     }
     
     
     func setupVCs() {
         viewControllers = [
-            createNavController(for: ViewController(), title: NSLocalizedString("Track ISS", comment: ""), image: UIImage(named: "tab-icon-sat")!),
             createNavController(for: FavoritosViewController(), title: NSLocalizedString("Favoritos", comment: ""), image: UIImage(systemName: "heart")!),
+            createNavController(for: ViewController(), title: NSLocalizedString("Track ISS", comment: ""), image: UIImage(named: "tab-icon-sat")!),
             createNavController(for: ConfiguracaoViewController(), title: NSLocalizedString("Configuração", comment: ""), image: UIImage(systemName: "gearshape")!)
         ]
     }
@@ -31,7 +39,7 @@ class TabBar: UITabBarController {
                                          title: String,
                                          image: UIImage) -> UIViewController {
         let navController = UINavigationController(rootViewController: rootViewController)
-        navController.tabBarItem.title = title
+//        navController.tabBarItem.title = title
         navController.tabBarItem.image = image
         navController.navigationBar.prefersLargeTitles = true
         rootViewController.navigationItem.title = title

@@ -13,7 +13,7 @@ class FavoritosViewController: UIViewController {
         super.viewDidLoad()
         
         // Teste
-        self.view.backgroundColor = .lightGray
+        self.view.backgroundColor = .white
     }
     
 
