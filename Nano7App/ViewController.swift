@@ -7,7 +7,7 @@
 
 import UIKit
 import MapKit
-class ViewController: UIViewController {
+class ViewController: UIViewController, MKMapViewDelegate {
     let annotion = MKPointAnnotation()
     lazy var map : MKMapView = {
         let map = MKMapView()
@@ -28,6 +28,37 @@ class ViewController: UIViewController {
     }
     
     
+    //Function to adding custom pin
+    private func addCustomPin(){
+        let pin = MKPointAnnotation()
+        pin.title = "ISS here"
+        map.addAnnotation(pin)
+    }
+    
+    //function to show custom pin at map
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard !(annotation is MKUserLocation) else {
+            return nil
+        }
+        
+        var annotationView = map.dequeueReusableAnnotationView(withIdentifier: "custom")
+        
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "custom")
+            
+            annotationView?.canShowCallout = true
+        }
+        else{
+            annotationView?.annotation = annotation
+        }
+        
+        annotationView?.image = UIImage(named: "IssIcon")
+        
+        
+        return annotationView
+    }
+    
+    
     func setupContraints() {
         self.view.addSubview(self.map)
         
@@ -37,6 +68,7 @@ class ViewController: UIViewController {
         map.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         map.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         map.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        map.delegate = self
         
         
         let coordinate = CLLocationCoordinate2D(latitude: -42.618332, longitude: 168.68759)
@@ -49,6 +81,8 @@ class ViewController: UIViewController {
                 let longitude = Double(iss.longitude)
                 DispatchQueue.main.async {
                     self.annotion.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                   
+                
                 }
         }
         
