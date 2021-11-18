@@ -40,11 +40,11 @@ class ConfiguracoesCellIconTextToggle: UITableViewCell {
         
         print("self.contentSize.width: \(self.contentSize.width)")
         
-        self.iconReduceAnimation.addConstraintAndConstant(with: self.contentView, centerY: 0, leading: self.contentSize.width * 0.045918, width: self.contentSize.width * 0.153061, height: self.contentSize.width * 0.076531)
-        self.textReduceAnimation.addConstraintAndConstant(with: self.contentView, centerY: 0)
+        self.iconReduceAnimation.addConstraintAndConstant(with: self.contentView, centerY: 0, leading: self.contentSize.width * 0.045918, width: self.contentSize.width * 0.153061)
+        self.toggleReduceAnimation.addConstraintAndConstant(with: self.contentView, centerY: 0, trailing: self.contentSize.width * -0.045918, width: self.contentSize.width * 0.153061)
+        self.textReduceAnimation.addConstraintAndConstant(with: self.contentView, top: 0, bottom: 0)
         self.textReduceAnimation.leadingAnchor.constraint(equalTo: self.iconReduceAnimation.trailingAnchor, constant: self.contentSize.width * 0.045918).isActive = true
         self.textReduceAnimation.trailingAnchor.constraint(equalTo: self.toggleReduceAnimation.leadingAnchor).isActive = true
-        self.toggleReduceAnimation.addConstraintAndConstant(with: self.contentView, centerY: 0, trailing: self.contentSize.width * -0.045918, width: self.contentSize.width * 0.153061, height: self.contentSize.width * 0.076531)
     }
 
 }

@@ -89,6 +89,10 @@ class ConfiguracaoViewController: UIViewController {
 }
 
 extension ConfiguracaoViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44.0
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return arraySection.count
     }
