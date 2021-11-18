@@ -7,6 +7,8 @@
 
 import UIKit
 
+//TODO: Modularizar
+
 struct TableSection {
     var title: String
     var rows: [Row]
