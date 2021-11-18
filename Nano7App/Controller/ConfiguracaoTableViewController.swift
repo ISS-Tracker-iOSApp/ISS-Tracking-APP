@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ConfiguracaoViewController: UITableViewController {
+class ConfiguracaoTableViewController: UITableViewController {
     let iconReduceAnimation = UIImageView()
     let textReduceAnimation = UILabel()
     let toggleReduceAnimation = UISwitch()
@@ -33,6 +33,6 @@ class ConfiguracaoViewController: UITableViewController {
 
 }
 
-extension ConfiguracaoViewController {
+extension ConfiguracaoTableViewController {
     
 }
