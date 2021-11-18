@@ -19,9 +19,9 @@ class ConfiguracoesCellIconTextToggle: UITableViewCell {
             return self.contentView.frame.size
     }
     
-    let iconReduceAnimation   = ConfiguracaoViews().iconView
-    let textReduceAnimation   = ConfiguracaoViews().textView
-    let toggleReduceAnimation = ConfiguracaoViews().toggleView
+    let generalIcon   = ConfiguracaoViews().iconView
+    let generalText   = ConfiguracaoViews().textView
+    let generalToggle = ConfiguracaoViews().toggleView
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,17 +34,17 @@ class ConfiguracoesCellIconTextToggle: UITableViewCell {
 //        self.contentSize =
 
         // Configure the view for the selected state
-        self.contentView.addSubview(self.iconReduceAnimation)
-        self.contentView.addSubview(self.textReduceAnimation)
-        self.contentView.addSubview(self.toggleReduceAnimation)
+        self.contentView.addSubview(self.generalIcon)
+        self.contentView.addSubview(self.generalText)
+        self.contentView.addSubview(self.generalToggle)
         
         print("self.contentSize.width: \(self.contentSize.width)")
         
-        self.iconReduceAnimation.addConstraintAndConstant(with: self.contentView, centerY: 0, leading: self.contentSize.width * 0.045918, width: self.contentSize.width * 0.153061)
-        self.toggleReduceAnimation.addConstraintAndConstant(with: self.contentView, centerY: 0, trailing: self.contentSize.width * -0.045918, width: self.contentSize.width * 0.153061)
-        self.textReduceAnimation.addConstraintAndConstant(with: self.contentView, top: 0, bottom: 0)
-        self.textReduceAnimation.leadingAnchor.constraint(equalTo: self.iconReduceAnimation.trailingAnchor, constant: self.contentSize.width * 0.045918).isActive = true
-        self.textReduceAnimation.trailingAnchor.constraint(equalTo: self.toggleReduceAnimation.leadingAnchor).isActive = true
+        self.generalIcon.addConstraintAndConstant(with: self.contentView, centerY: 0, leading: self.contentSize.width * 0.045918, width: self.contentSize.width * 0.153061)
+        self.generalToggle.addConstraintAndConstant(with: self.contentView, centerY: 0, trailing: self.contentSize.width * -0.045918, width: self.contentSize.width * 0.153061)
+        self.generalText.addConstraintAndConstant(with: self.contentView, top: 0, bottom: 0)
+        self.generalText.leadingAnchor.constraint(equalTo: self.generalIcon.trailingAnchor, constant: self.contentSize.width * 0.045918).isActive = true
+        self.generalText.trailingAnchor.constraint(equalTo: self.generalToggle.leadingAnchor).isActive = true
     }
 
 }

@@ -19,11 +19,12 @@ struct Row {
     var icon: UIImage?
     var text: String
     var toggle: UISwitch?
+    var selector: Selector?
 }
 
 protocol Toggleble {
     var toggle: UISwitch? { get set }
-//    mutating func setTarget(buttonTarget: Any?, buttonAction: Selector, buttonEvent: UIControl.Event)
+    //    mutating func setTarget(buttonTarget: Any?, buttonAction: Selector, buttonEvent: UIControl.Event)
 }
 
 extension Toggleble {
@@ -33,29 +34,39 @@ extension Toggleble {
 }
 
 
+protocol ToggleHapticsDelegate {
+    func toggleHapticsClicked()
+}
+
 
 class ConfiguracaoViewController: UIViewController {
     let tableConfiguracao = ConfiguracaoViews().tableView
-
+    
     var arraySection: [TableSection] = [
         TableSection(title: "GERAL", rows: [
-                                            Row(icon: UIImage(systemName: "iphone.badge.play"), text: "Reduce Animations", toggle: nil),
-                                            Row(icon: UIImage(systemName: "iphone.radiowaves.left.and.right"), text: "Haptics", toggle: nil)
-                                            ], cell: ConfiguracoesCellIconTextToggle.self),
+            Row(icon: UIImage(systemName: "iphone.badge.play"), text: "Reduce Animations", toggle: nil, selector: #selector(toggleHapticsClicked(_:))),
+            Row(icon: UIImage(systemName: "iphone.radiowaves.left.and.right"), text: "Haptics", toggle: nil)
+        ], cell: ConfiguracoesCellIconTextToggle.self),
         TableSection(title: "MAPA", rows: [
-                                            Row(icon: UIImage(systemName: "location"), text: "Large Map Annotations", toggle: nil)
-                                            ], cell: ConfiguracoesCellIconTextToggle.self),
+            Row(icon: UIImage(systemName: "location"), text: "Large Map Annotations", toggle: nil)
+        ], cell: ConfiguracoesCellIconTextToggle.self),
         TableSection(title: "RECURSOS", rows: [
-                                            Row(icon: nil, text: "TrackISS Github repo", toggle: nil),
-                                            Row(icon: nil, text: "Open-Notify ApI", toggle: nil),
-                                            Row(icon: nil, text: "Where the ISS at? API", toggle: nil),
-                                            Row(icon: nil, text: "NASA Image and Video Library API", toggle: nil)
-                                            ], cell: ConfiguracoesCellText.self),
+            Row(icon: nil, text: "TrackISS Github repo", toggle: nil),
+            Row(icon: nil, text: "Open-Notify ApI", toggle: nil),
+            Row(icon: nil, text: "Where the ISS at? API", toggle: nil),
+            Row(icon: nil, text: "NASA Image and Video Library API", toggle: nil)
+        ], cell: ConfiguracoesCellText.self),
         TableSection(title: "", rows: [
-                                            Row(icon: UIImage(systemName: "person"), text: "Developers", toggle: nil),
-                                            Row(icon: UIImage(systemName: "dollarsign.circle"), text: "Leave a tip", toggle: nil)
-                                            ], cell: ConfiguracoesCellIconText.self)
+            Row(icon: UIImage(systemName: "person"), text: "Developers", toggle: nil),
+            Row(icon: UIImage(systemName: "dollarsign.circle"), text: "Leave a tip", toggle: nil)
+        ], cell: ConfiguracoesCellIconText.self)
     ]
+    
+    //MARK: Delegate
+    var delegate: ToggleHapticsDelegate?
+    var userDefultVC: UserDefaults = UserDefaults()
+    
+    //Lyfe cycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -68,24 +79,29 @@ class ConfiguracaoViewController: UIViewController {
         super.viewDidLoad()
         
         // Teste
-//        self.view.backgroundColor = .gray
+        //        self.view.backgroundColor = .gray
         
         self.tableConfiguracao.dataSource = self
         self.tableConfiguracao.delegate   = self
         
     }
     
+    // Actions
+    
+    @objc func toggleHapticsClicked(_ sender: UIButton) {
+        print("@objc func toggleHapticsClicked(_ sender: UIButton) {")
+        
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        //                    grayButton.configuration?.showsActivityIndicator = true
+        //                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        //                        self.grayButton.configuration?.showsActivityIndicator = false
+        //                    }
+//        guard let delegate = delegate else { return }
+        
+        self.delegate?.toggleHapticsClicked()
     }
-    */
-
+    
+    
 }
 
 extension ConfiguracaoViewController: UITableViewDataSource {
@@ -102,11 +118,11 @@ extension ConfiguracaoViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-            case 0:  return 2
-            case 1:  return 1
-            case 2:  return 4
-            case 3:  return 2
-            default: return 0
+        case 0:  return 2
+        case 1:  return 1
+        case 2:  return 4
+        case 3:  return 2
+        default: return 0
         }
     }
     
@@ -114,40 +130,49 @@ extension ConfiguracaoViewController: UITableViewDataSource {
         
         
         switch indexPath.section {
-            case 0:
+        case 0:
             self.tableConfiguracao.register(ConfiguracoesCellIconTextToggle.self, forCellReuseIdentifier: ConfiguracoesCellIconTextToggle.identifier)
-                let cell = tableView.dequeueReusableCell(withIdentifier: ConfiguracoesCellIconTextToggle.identifier) as! ConfiguracoesCellIconTextToggle
-            cell.iconReduceAnimation.image = arraySection[indexPath.section].rows[indexPath.row].icon //UIImage(systemName: "heart")
-            cell.textReduceAnimation.text = arraySection[indexPath.section].rows[indexPath.row].text
-//                  cell.toggleReduceAnimation.addTarget(<#T##Any?#>, action: <#T##Selector#>, for: <#T##UIControl.Event#>)
-                return cell
-            case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ConfiguracoesCellIconTextToggle.identifier) as! ConfiguracoesCellIconTextToggle
+            cell.generalIcon.image = arraySection[indexPath.section].rows[indexPath.row].icon
+            cell.generalText.text = arraySection[indexPath.section].rows[indexPath.row].text
+            // Toggles Action
+//            switch cell.generalText.text {
+//                case "Haptics":
+            if arraySection[indexPath.section].rows[indexPath.row].selector != nil {
+                cell.generalToggle.addTarget(self, action: arraySection[indexPath.section].rows[indexPath.row].selector!, for: .touchUpInside)
+            }
+//            default:
+//                print("Deu ruim")
+//            }
+            
+            return cell
+        case 1:
             self.tableConfiguracao.register(ConfiguracoesCellIconTextToggle.self, forCellReuseIdentifier: ConfiguracoesCellIconTextToggle.identifier)
-                let cell = tableView.dequeueReusableCell(withIdentifier: ConfiguracoesCellIconTextToggle.identifier) as! ConfiguracoesCellIconTextToggle
-            cell.iconReduceAnimation.image = arraySection[indexPath.section].rows[indexPath.row].icon //UIImage(systemName: "heart")
-            cell.textReduceAnimation.text = arraySection[indexPath.section].rows[indexPath.row].text
+            let cell = tableView.dequeueReusableCell(withIdentifier: ConfiguracoesCellIconTextToggle.identifier) as! ConfiguracoesCellIconTextToggle
+            cell.generalIcon.image = arraySection[indexPath.section].rows[indexPath.row].icon //UIImage(systemName: "heart")
+            cell.generalText.text = arraySection[indexPath.section].rows[indexPath.row].text
             
             
-                return cell
-            case 2:
+            return cell
+        case 2:
             self.tableConfiguracao.register(ConfiguracoesCellText.self, forCellReuseIdentifier: ConfiguracoesCellText.identifier)
-                let cell = tableView.dequeueReusableCell(withIdentifier: ConfiguracoesCellText.identifier) as! ConfiguracoesCellText
+            let cell = tableView.dequeueReusableCell(withIdentifier: ConfiguracoesCellText.identifier) as! ConfiguracoesCellText
             cell.textReduceAnimation.text = arraySection[indexPath.section].rows[indexPath.row].text
-
-            cell.accessoryType = .disclosureIndicator
-
             
-                return cell
-            case 3:
+            cell.accessoryType = .disclosureIndicator
+            
+            
+            return cell
+        case 3:
             self.tableConfiguracao.register(ConfiguracoesCellIconText.self, forCellReuseIdentifier: ConfiguracoesCellIconText.identifier)
-                let cell = tableView.dequeueReusableCell(withIdentifier: ConfiguracoesCellIconText.identifier) as! ConfiguracoesCellIconText
+            let cell = tableView.dequeueReusableCell(withIdentifier: ConfiguracoesCellIconText.identifier) as! ConfiguracoesCellIconText
             cell.iconReduceAnimation.image = arraySection[indexPath.section].rows[indexPath.row].icon //UIImage(systemName: "heart")
             cell.textReduceAnimation.text = arraySection[indexPath.section].rows[indexPath.row].text
             cell.accessoryType = .disclosureIndicator
             
-                return cell
-            default:
-                print("Deu ruim.")
+            return cell
+        default:
+            print("Deu ruim.")
         }
         
         self.tableConfiguracao.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
@@ -172,15 +197,15 @@ extension ConfiguracaoViewController: UITableViewDelegate {
  //
  //  Created by Luiz Araujo on 17/11/21.
  //
-
+ 
  import UIKit
-
+ 
  struct TableSection {
-     var title: String
-     var icon: UIImage
-     var text: String
-     var toggle: UISwitch
-     var numberOfRows: Int
+ var title: String
+ var icon: UIImage
+ var text: String
+ var toggle: UISwitch
+ var numberOfRows: Int
  }
  //
  class ConfiguracaoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -209,16 +234,16 @@ extension ConfiguracaoViewController: UITableViewDelegate {
  //
  //
  //    }
-     let arraySectionTitle = ["GENERAL", "MAP", "RESOURCES", ""]
-     let tableConfiguracao = ConfiguracaoViews().tableView
-
-     let tableView = UITableView()
-     var safeArea: UILayoutGuide!
-
-
-     override func viewWillAppear(_ animated: Bool) {
-         super.viewWillAppear(animated)
-
+ let arraySectionTitle = ["GENERAL", "MAP", "RESOURCES", ""]
+ let tableConfiguracao = ConfiguracaoViews().tableView
+ 
+ let tableView = UITableView()
+ var safeArea: UILayoutGuide!
+ 
+ 
+ override func viewWillAppear(_ animated: Bool) {
+ super.viewWillAppear(animated)
+ 
  //        self.view.addSubview(self.tableConfiguracao)
  //        self.tableConfiguracao.addConstraintAndConstant(with: self.view, centerX: 0, bottom: 0, leading: 0, trailing: 0)
  //        self.tableConfiguracao.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 150).isActive = true
@@ -227,117 +252,117 @@ extension ConfiguracaoViewController: UITableViewDelegate {
  //        self.view.backgroundColor = .gray
  ////        self.tableConfiguracao.register(ConfiguracoesCellIconTextToggle.self, forCellReuseIdentifier: ConfiguracoesCellIconTextToggle.identifier)
  //        self.tableConfiguracao.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-         view.backgroundColor = .white
-            safeArea = view.layoutMarginsGuide
-            setupTableView()
-     }
-
-     func setupTableView() {
-         view.addSubview(tableView)
-         tableView.backgroundColor = .red
-       tableView.translatesAutoresizingMaskIntoConstraints = false
-       tableView.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
-       tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-       tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-       tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-       }
-     /*
-     // MARK: - Navigation
-
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-         // Get the new view controller using segue.destination.
-         // Pass the selected object to the new view controller.
-     }
-     */
-
+ view.backgroundColor = .white
+ safeArea = view.layoutMarginsGuide
+ setupTableView()
+ }
+ 
+ func setupTableView() {
+ view.addSubview(tableView)
+ tableView.backgroundColor = .red
+ tableView.translatesAutoresizingMaskIntoConstraints = false
+ tableView.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+ tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+ tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+ tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
  }
  /*
- extension ConfiguracaoViewController: UITableViewDataSource {
-     func numberOfSections(in tableView: UITableView) -> Int {
- //        return arraySectionTitle.count
-         return 1
-     }
-     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-         return arraySectionTitle[section]
-     }
-     
-     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
- //
- //        switch section {
- //            case 0:  return 2
- //            case 1:  return 1
- //            case 2:  return 4
- //            case 3:  return 2
- //            default: return 0
- //        }
-         return 10
-     }
-     
-     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-         
-         /*
-         switch indexPath.section {
-             case 0:
-                 let cell = tableView.dequeueReusableCell(withIdentifier: ConfiguracoesCellIconTextToggle.identifier) as! ConfiguracoesCellIconTextToggle
-                 cell.iconReduceAnimation.image = UIImage(systemName: "heart")
-                 cell.textReduceAnimation.text = "Blablabla"
- //                  cell.toggleReduceAnimation.addTarget(<#T##Any?#>, action: <#T##Selector#>, for: <#T##UIControl.Event#>)
-                 return cell
-             case 1:
-                 let cell = tableView.dequeueReusableCell(withIdentifier: ConfiguracoesCellIconTextToggle.identifier) as! ConfiguracoesCellIconTextToggle
-             
-             
-             
-                 return cell
-             case 2:
-                 let cell = tableView.dequeueReusableCell(withIdentifier: ConfiguracoesCellText.identifier) as! ConfiguracoesCellText
-             
-             
-             
-                 return cell
-             case 3:
-                 let cell = tableView.dequeueReusableCell(withIdentifier: ConfiguracoesCellIconText.identifier) as! ConfiguracoesCellIconText
-             
-             
-             
-                 return cell
-             default:
-                 print("deu ruim")
-         }
-         
-         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
-         return cell
-          
-           */
-         
-         
-         
-         
- //        let cell = tableView.dequeueReusableCell(withIdentifier: ConfiguracoesCellIconTextToggle.identifier) as! ConfiguracoesCellIconTextToggle
-         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
- //            cell.iconReduceAnimation.image = UIImage(systemName: "heart")
- //            cell.textReduceAnimation.text = "Blablabla"
-         let textt = UILabel()
-         textt.text = "basdasdsa"
-         cell.addSubview(textt)
-         textt.addConstraintAndConstant(with: cell, centerX: 0, centerY: 0)
- //                  cell.toggleReduceAnimation.addTarget(<#T##Any?#>, action: <#T##Selector#>, for: <#T##UIControl.Event#>)
-             return cell
-     }
-     
-     
+  // MARK: - Navigation
+  
+  // In a storyboard-based application, you will often want to do a little preparation before navigation
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+  // Get the new view controller using segue.destination.
+  // Pass the selected object to the new view controller.
+  }
+  */
+ 
  }
-
- extension ConfiguracaoViewController: UITableViewDelegate {
-     
- }
-
-
- */
-
-
-
+ /*
+  extension ConfiguracaoViewController: UITableViewDataSource {
+  func numberOfSections(in tableView: UITableView) -> Int {
+  //        return arraySectionTitle.count
+  return 1
+  }
+  func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+  return arraySectionTitle[section]
+  }
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  //
+  //        switch section {
+  //            case 0:  return 2
+  //            case 1:  return 1
+  //            case 2:  return 4
+  //            case 3:  return 2
+  //            default: return 0
+  //        }
+  return 10
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  
+  /*
+   switch indexPath.section {
+   case 0:
+   let cell = tableView.dequeueReusableCell(withIdentifier: ConfiguracoesCellIconTextToggle.identifier) as! ConfiguracoesCellIconTextToggle
+   cell.iconReduceAnimation.image = UIImage(systemName: "heart")
+   cell.textReduceAnimation.text = "Blablabla"
+   //                  cell.toggleReduceAnimation.addTarget(<#T##Any?#>, action: <#T##Selector#>, for: <#T##UIControl.Event#>)
+   return cell
+   case 1:
+   let cell = tableView.dequeueReusableCell(withIdentifier: ConfiguracoesCellIconTextToggle.identifier) as! ConfiguracoesCellIconTextToggle
+   
+   
+   
+   return cell
+   case 2:
+   let cell = tableView.dequeueReusableCell(withIdentifier: ConfiguracoesCellText.identifier) as! ConfiguracoesCellText
+   
+   
+   
+   return cell
+   case 3:
+   let cell = tableView.dequeueReusableCell(withIdentifier: ConfiguracoesCellIconText.identifier) as! ConfiguracoesCellIconText
+   
+   
+   
+   return cell
+   default:
+   print("deu ruim")
+   }
+   
+   let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
+   return cell
+   
+   */
+  
+  
+  
+  
+  //        let cell = tableView.dequeueReusableCell(withIdentifier: ConfiguracoesCellIconTextToggle.identifier) as! ConfiguracoesCellIconTextToggle
+  let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
+  //            cell.iconReduceAnimation.image = UIImage(systemName: "heart")
+  //            cell.textReduceAnimation.text = "Blablabla"
+  let textt = UILabel()
+  textt.text = "basdasdsa"
+  cell.addSubview(textt)
+  textt.addConstraintAndConstant(with: cell, centerX: 0, centerY: 0)
+  //                  cell.toggleReduceAnimation.addTarget(<#T##Any?#>, action: <#T##Selector#>, for: <#T##UIControl.Event#>)
+  return cell
+  }
+  
+  
+  }
+  
+  extension ConfiguracaoViewController: UITableViewDelegate {
+  
+  }
+  
+  
+  */
+ 
+ 
+ 
  //
  //extension ConfiguracaoViewController {
  //  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -349,15 +374,15 @@ extension ConfiguracaoViewController: UITableViewDelegate {
  //    return cell
  //  }
  //}
-
+ 
  //    private let contacts = ContactAPI.getContacts() // model
  //
  //let contactsTableView = UITableView() // view
-    
-    
-
-
-
+ 
+ 
+ 
+ 
+ 
  //   override func viewDidLoad() {
  //       super.viewDidLoad()
  //
@@ -399,8 +424,8 @@ extension ConfiguracaoViewController: UITableViewDelegate {
  //        return 100
  //    }
  //
-
-
+ 
+ 
  }
-
+ 
  */
