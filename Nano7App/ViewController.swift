@@ -33,20 +33,17 @@ class ViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDe
     let annotion = MKPointAnnotation()
     lazy var map : MKMapView = {
         let map = MKMapView()
-        map.mapType = .hybridFlyover
         map.overrideUserInterfaceStyle = .dark
         return map
     }()
     
     
     override func viewDidLoad() {
-        
+
         super.viewDidLoad()
-        // Set initial location in Honolulu)
-        
-        
+
         setupContraints()
-        
+        changeMapButton()
     }
     
     
@@ -57,6 +54,8 @@ class ViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDe
         pin.title = "ISS here"
         map.addAnnotation(pin)
     }
+    
+    
     
     //function to show custom pin at map
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -106,6 +105,33 @@ class ViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDe
         self.label.isHidden.toggle()
     }
     
+    @objc func buttonAction(button: UIButton){
+        if map.mapType == .hybridFlyover {
+            map.mapType = .standard
+        }else{
+            map.mapType = .hybridFlyover
+        }
+        
+    }
+    
+    func changeMapButton(){
+        let button = UIButton(type: .system)
+        button.frame = CGRect(x: 200, y: 200, width: 100, height: 100)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 8
+        button.setTitle("🌎", for: .normal)
+        
+        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        
+        self.view.addSubview(button)
+        
+        //Button constraints
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50).isActive = true
+        button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+    }
+    
+    
     
     
     func setupContraints() {
@@ -118,6 +144,10 @@ class ViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDe
         map.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         map.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         map.delegate = self
+    
+        
+        
+
         
         
         let coordinate = CLLocationCoordinate2D(latitude: -42.618332, longitude: 168.68759)
