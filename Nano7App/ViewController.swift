@@ -8,9 +8,10 @@
 import UIKit
 import MapKit
 
-class ViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate {
+class ViewController: UIViewController,UIGestureRecognizerDelegate {
     //pro toque
-    var annotation: MKAnnotationView?
+    var issAnnotationView: MKAnnotationView?
+    let issPointAnnotation = MKPointAnnotation()
     var imagemSatelite: UIImage?
     
     lazy var popUp: UIView = {
@@ -30,7 +31,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDe
         return label
     }()
     
-    let annotion = MKPointAnnotation()
+    
     lazy var map : MKMapView = {
         let map = MKMapView()
         map.overrideUserInterfaceStyle = .dark
@@ -39,11 +40,29 @@ class ViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDe
     
     
     override func viewDidLoad() {
-
+        
         super.viewDidLoad()
-
         setupContraints()
         changeMapButton()
+        
+        //Add MapView Delegate
+        map.delegate = self
+        updateIssLocation()
+        setISSRegion()
+        updateOrbitPathOverlays()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        // show iss regin in map
+        setISSRegion()
+    }
+    
+    
+    
+    ///Method that center in iss location
+    private func setISSRegion() {
+        self.map.setRegion(MKCoordinateRegion(center: self.issPointAnnotation.coordinate, latitudinalMeters: CLLocationDistance(8000000), longitudinalMeters: 8000000), animated: true)
     }
     
     
@@ -56,39 +75,6 @@ class ViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDe
     }
     
     
-    
-    //function to show custom pin at map
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard !(annotation is MKUserLocation) else {
-            return nil
-        }
-        
-        var annotationView = map.dequeueReusableAnnotationView(withIdentifier: "custom")
-        
-        if annotationView == nil {
-            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "custom")
-            
-            annotationView?.canShowCallout = true
-        }
-        else{
-            annotationView?.annotation = annotation
-        }
-        
-        annotationView?.image = UIImage(named: "IssIcon")
-        
-        self.annotation = annotationView
-        self.imagemSatelite = annotationView?.image
-        
-        if self.annotation != nil{
-            self.setupImage(self.annotation!)
-            self.annotation?.addSubview(self.popUp)
-            self.annotation?.addSubview(self.label)
-        }
-        
-        return annotationView
-        
-    }
-    
     func setupImage(_ annotation: MKAnnotationView){
         let overlay = UIButton(frame: annotation.bounds)
         annotation.isUserInteractionEnabled = true
@@ -97,7 +83,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDe
         annotation.addSubview(overlay)
     }
     
-
+    
     
     @objc func teste(){
         print("***TOCOU NO PINTO***")
@@ -132,6 +118,47 @@ class ViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDe
     }
     
     
+    private func updateIssLocation() {
+        
+        IssAPI.shared.request { iss in
+            DispatchQueue.main.async {
+                self.issPointAnnotation.coordinate = iss.getCoordinate()
+                self.setISSRegion()
+            }
+        }
+        Timer.scheduledTimer(withTimeInterval: 1.2, repeats: true) { timer in
+            IssAPI.shared.request { iss in
+                DispatchQueue.main.async {
+                    self.issPointAnnotation.coordinate = iss.getCoordinate()
+                    self.label.text = "Nome: \(iss.name.uppercased())\nLatitude: \(iss.latitude)\nLongitude: \(iss.longitude)\nAltitude: \(iss.altitude)\nVelocidade: \(iss.velocity)\nVisibilidade: \(iss.visibility)\nPegadas: \(iss.footprint)"
+                }
+            }
+        }
+        
+        map.addAnnotation(issPointAnnotation)
+    }
+    
+    
+    func updateOrbitPathOverlays() {
+        
+        //Create overlay: https://stackoverflow.com/questions/44581445/how-to-plot-satellite-ground-track-on-to-a-map-projection-in-swift
+        IssAPI.shared.requestISSOrbit { locations in
+            
+            var coordinates: [CLLocationCoordinate2D] = []
+            locations.forEach { location in
+                coordinates.append(location.getCoordinate())
+            }
+            
+            let polyline = MKGeodesicPolyline(coordinates: coordinates, count: coordinates.count)
+            DispatchQueue.main.async {
+                self.map.removeOverlays(self.map.overlays)
+                self.map.addOverlay(polyline)
+            }
+  
+        }
+           
+       }
+    
     
     
     func setupContraints() {
@@ -143,31 +170,51 @@ class ViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDe
         map.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         map.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         map.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        map.delegate = self
-    
-        
-        
-
-        
-        
-        let coordinate = CLLocationCoordinate2D(latitude: -42.618332, longitude: 168.68759)
-        annotion.coordinate = coordinate
-        
-        
-        Timer.scheduledTimer(withTimeInterval: 1.2, repeats: true) { timer in
-            IssAPI.shared.request { iss in
-                let latitude = Double(iss.latitude)
-                let longitude = Double(iss.longitude)
-                
-                DispatchQueue.main.async {
-                    
-                    self.annotion.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                    self.label.text = "Nome: \(iss.name.uppercased())\nLatitude: \(iss.latitude)\nLongitude: \(iss.longitude)\nAltitude: \(iss.altitude)\nVelocidade: \(iss.velocity)\nVisibilidade: \(iss.visibility)\nPegadas: \(iss.footprint)"
-                    
-                }
-            }
-        }
-        map.addAnnotation(annotion)
     }
 }
 
+
+extension ViewController: MKMapViewDelegate {
+    
+    //function to show custom pin at map
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard !(annotation is MKUserLocation) else {
+            return nil
+        }
+        
+        var annotationView = map.dequeueReusableAnnotationView(withIdentifier: "custom")
+        
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "custom")
+            
+            annotationView?.canShowCallout = true
+        }
+        else{
+            annotationView?.annotation = annotation
+        }
+        
+        annotationView?.image = UIImage(named: "IssIcon")
+        
+        self.issAnnotationView = annotationView
+        self.imagemSatelite = annotationView?.image
+        
+        if self.issAnnotationView != nil{
+            self.setupImage(self.issAnnotationView!)
+            self.issAnnotationView?.addSubview(self.popUp)
+            self.issAnnotationView?.addSubview(self.label)
+        }
+        
+        return annotationView
+        
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if overlay is MKGeodesicPolyline {
+            let polylineRenderer = MKPolylineRenderer(overlay: overlay)
+            polylineRenderer.strokeColor = UIColor.red
+            polylineRenderer.lineWidth = 2
+            return polylineRenderer
+    }
+        return MKOverlayRenderer()
+    }
+}
