@@ -35,6 +35,14 @@ class MapViewController: UIViewController,UIGestureRecognizerDelegate {
     }()
     
     
+    lazy var issButton: UIButton = {
+        let button = UIButton()
+        
+        return button
+    }()
+    
+    
+    
     lazy var map : MKMapView = {
         let map = MKMapView()
         map.overrideUserInterfaceStyle = .dark
@@ -98,14 +106,13 @@ class MapViewController: UIViewController,UIGestureRecognizerDelegate {
         let overlay = UIButton(frame: annotation.bounds)
         annotation.isUserInteractionEnabled = true
         overlay.backgroundColor = UIColor.red.withAlphaComponent(0.0)
-        overlay.addTarget(self, action: #selector(teste), for: UIControl.Event.touchUpInside)
+        overlay.addTarget(self, action: #selector(showISSInfos), for: UIControl.Event.touchUpInside)
         annotation.addSubview(overlay)
     }
     
     
     
-    @objc func teste(){
-        print("***TOCOU NO PINTO***")
+    @objc func showISSInfos(){
         self.popUp.isHidden.toggle()
         self.label.isHidden.toggle()
     }
@@ -120,12 +127,13 @@ class MapViewController: UIViewController,UIGestureRecognizerDelegate {
     }
     
     func changeMapButton(){
-        let button = UIButton(type: .system)
-        button.frame = CGRect(x: 200, y: 200, width: 100, height: 100)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 8
-        button.setTitle("🌎", for: .normal)
+        let button = UIButton()
         
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .bold, scale: .large)
+        button.backgroundColor = .white
+        let largeBoldMap = UIImage(systemName: "map.circle.fill", withConfiguration: largeConfig)
+        button.layer.cornerRadius = 8
+        button.setImage(largeBoldMap, for: .normal)
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         
         self.view.addSubview(button)
@@ -138,18 +146,23 @@ class MapViewController: UIViewController,UIGestureRecognizerDelegate {
     
     
     private func updateIssLocation() {
-        
         IssAPI.shared.request { iss in
             DispatchQueue.main.async {
                 self.issPointAnnotation.coordinate = iss.getCoordinate()
                 self.setISSRegion()
             }
         }
+        
+        //Cria o timer que atualiza as posições a cada 1.2 segundos
         Timer.scheduledTimer(withTimeInterval: 1.2, repeats: true) { timer in
+            //Solicita as informações da ISS
             IssAPI.shared.request { iss in
                 DispatchQueue.main.async {
+                    //Atribui as novas coordenas para a Annotation da ISS
                     self.issPointAnnotation.coordinate = iss.getCoordinate()
+                    //Atualiza as labels de informações da ISS
                     self.label.text = "Nome: \(iss.name.uppercased())\nLatitude: \(iss.latitude)\nLongitude: \(iss.longitude)\nAltitude: \(iss.altitude)\nVelocidade: \(iss.velocity)\nVisibilidade: \(iss.visibility)\nPegadas: \(iss.footprint)\n"
+                    //Atualiza a órbita que a ISS irá percorrer
                         self.updateOrbitPathOverlays()
                 }
             }
@@ -159,27 +172,28 @@ class MapViewController: UIViewController,UIGestureRecognizerDelegate {
     }
     
     
-    
-    
-    
-    
     func updateOrbitPathOverlays() {
         
-        //Create overlay: https://stackoverflow.com/questions/44581445/how-to-plot-satellite-ground-track-on-to-a-map-projection-in-swift
-       
+        //Solicita as 11 posições futuras da ISS
         IssAPI.shared.requestISSOrbit { locations in
+            
             var coordinates: [CLLocationCoordinate2D] = []
+            
+            //Atribuição das latitudes e longitudes de cada ponto
             locations.forEach { location in
                 coordinates.append(location.getCoordinate())
             }
+            
+            //Criação da overlay da orbita que a ISS irá percorrer
             let polyline = MKGeodesicPolyline(coordinates: coordinates, count: coordinates.count)
+            
             DispatchQueue.main.async {
+                //Remoção da órbita antiga
                 self.map.removeOverlays(self.map.overlays)
+                //Atribuição da nova órbita
                 self.map.addOverlay(polyline)
             }
-            
         }
-        
     }
     
     
