@@ -24,7 +24,7 @@ final class IssAPI {
     
     
     ///Method that request datas from issAPI
-    func request(completion: @escaping (Satellite) -> Void ) {
+    func request(completion: @escaping (ISS) -> Void ) {
         let session = URLSession.shared
         let url = URL(string: "https://api.wheretheiss.at/v1/satellites/25544")
         guard let url = url else {return}
@@ -40,7 +40,7 @@ final class IssAPI {
                     guard let data = data else {
                         return
                     }
-                    let datas = try JSONDecoder().decode(Satellite.self, from: data)
+                    let datas = try JSONDecoder().decode(ISS.self, from: data)
                     completion(datas)
                 } catch {
                     print("Deu ruim")

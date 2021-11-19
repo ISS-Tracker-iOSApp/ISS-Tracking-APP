@@ -7,37 +7,6 @@
 
 import UIKit
 
-//TODO: Modularizar
-
-struct TableSection {
-    var title: String
-    var rows: [Row]
-    var cell: Any
-}
-
-struct Row {
-    var icon: UIImage?
-    var text: String
-    var toggle: UISwitch?
-    var selector: Selector?
-}
-
-protocol Toggleble {
-    var toggle: UISwitch? { get set }
-    //    mutating func setTarget(buttonTarget: Any?, buttonAction: Selector, buttonEvent: UIControl.Event)
-}
-
-extension Toggleble {
-    mutating func setTarget(buttonTarget: Any?, buttonAction: Selector, buttonEvent: UIControl.Event) {
-        self.toggle?.addTarget(buttonTarget, action: buttonAction, for: buttonEvent)
-    }
-}
-
-protocol ConfigurationDelegate {
-    func toggleHapticsClicked()
-}
-
-
 class ConfigurationViewController: UIViewController {
     let tableConfiguration = ConfigurationViews().tableView
     

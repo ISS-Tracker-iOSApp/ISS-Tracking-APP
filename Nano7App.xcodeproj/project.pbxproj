@@ -9,14 +9,18 @@
 /* Begin PBXBuildFile section */
 		2376A476274426C800ECB3B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376A475274426C800ECB3B6 /* AppDelegate.swift */; };
 		2376A478274426C800ECB3B6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376A477274426C800ECB3B6 /* SceneDelegate.swift */; };
-		2376A47A274426C800ECB3B6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376A479274426C800ECB3B6 /* ViewController.swift */; };
+		2376A47A274426C800ECB3B6 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376A479274426C800ECB3B6 /* MapViewController.swift */; };
 		2376A480274426C800ECB3B6 /* Nano7App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2376A47E274426C800ECB3B6 /* Nano7App.xcdatamodeld */; };
 		2376A482274426C900ECB3B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2376A481274426C900ECB3B6 /* Assets.xcassets */; };
 		2376A485274426C900ECB3B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2376A483274426C900ECB3B6 /* LaunchScreen.storyboard */; };
 		2376A48E2744354C00ECB3B6 /* IssAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376A48D2744354C00ECB3B6 /* IssAPI.swift */; };
-		2376A4942746CFB800ECB3B6 /* Satellite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376A4932746CFB800ECB3B6 /* Satellite.swift */; };
-		2376A4962746D01000ECB3B6 /* IssLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376A4952746D01000ECB3B6 /* IssLocation.swift */; };
-		2376A4992746D06900ECB3B6 /* Date+CurrentMillis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376A4982746D06900ECB3B6 /* Date+CurrentMillis.swift */; };
+		2376A4A22747F2AD00ECB3B6 /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376A4A12747F2AD00ECB3B6 /* TableSection.swift */; };
+		2376A4A42747F2E100ECB3B6 /* Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376A4A32747F2E100ECB3B6 /* Row.swift */; };
+		2376A4A72747F34C00ECB3B6 /* Toggleble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376A4A62747F34C00ECB3B6 /* Toggleble.swift */; };
+		2376A4AA2747F39A00ECB3B6 /* ConfigurationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376A4A92747F39A00ECB3B6 /* ConfigurationDelegate.swift */; };
+		2376A4AC2747F47F00ECB3B6 /* Satellite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376A4AB2747F47F00ECB3B6 /* Satellite.swift */; };
+		2376A4AE2747F74700ECB3B6 /* IssLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376A4AD2747F74700ECB3B6 /* IssLocation.swift */; };
+		2376A4B02747F82000ECB3B6 /* HapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376A4AF2747F82000ECB3B6 /* HapticsManager.swift */; };
 		6F40F08627457A3C00F74258 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F40F08527457A3C00F74258 /* TabBar.swift */; };
 		6F40F088274582D600F74258 /* FavoritosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F40F087274582D600F74258 /* FavoritosViewController.swift */; };
 		6F40F08A2745832800F74258 /* ConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F40F0892745832800F74258 /* ConfigurationViewController.swift */; };
@@ -25,23 +29,26 @@
 		6F40F09227467CAD00F74258 /* UIView+Constraints2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F40F09127467CAD00F74258 /* UIView+Constraints2.swift */; };
 		6F40F0942746CE5E00F74258 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F40F0932746CE5E00F74258 /* UserDefaultsManager.swift */; };
 		6F40F0982747E1C100F74258 /* Date+CurrentMillis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F40F0972747E1C100F74258 /* Date+CurrentMillis.swift */; };
-		6F40F09B2747E2BC00F74258 /* IssLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F40F09A2747E2BC00F74258 /* IssLocation.swift */; };
-		6F40F09D2747E2DF00F74258 /* Satellite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F40F09C2747E2DF00F74258 /* Satellite.swift */; };
+		6F40F09D2747E2DF00F74258 /* ISS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F40F09C2747E2DF00F74258 /* ISS.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2376A472274426C800ECB3B6 /* Nano7App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nano7App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2376A475274426C800ECB3B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2376A477274426C800ECB3B6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		2376A479274426C800ECB3B6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		2376A479274426C800ECB3B6 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		2376A47F274426C800ECB3B6 /* Nano7App.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Nano7App.xcdatamodel; sourceTree = "<group>"; };
 		2376A481274426C900ECB3B6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2376A484274426C900ECB3B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2376A486274426C900ECB3B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2376A48D2744354C00ECB3B6 /* IssAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssAPI.swift; sourceTree = "<group>"; };
-		2376A4932746CFB800ECB3B6 /* Satellite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Satellite.swift; sourceTree = "<group>"; };
-		2376A4952746D01000ECB3B6 /* IssLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssLocation.swift; sourceTree = "<group>"; };
-		2376A4982746D06900ECB3B6 /* Date+CurrentMillis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+CurrentMillis.swift"; sourceTree = "<group>"; };
+		2376A4A12747F2AD00ECB3B6 /* TableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSection.swift; sourceTree = "<group>"; };
+		2376A4A32747F2E100ECB3B6 /* Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Row.swift; sourceTree = "<group>"; };
+		2376A4A62747F34C00ECB3B6 /* Toggleble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toggleble.swift; sourceTree = "<group>"; };
+		2376A4A92747F39A00ECB3B6 /* ConfigurationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationDelegate.swift; sourceTree = "<group>"; };
+		2376A4AB2747F47F00ECB3B6 /* Satellite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Satellite.swift; sourceTree = "<group>"; };
+		2376A4AD2747F74700ECB3B6 /* IssLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssLocation.swift; sourceTree = "<group>"; };
+		2376A4AF2747F82000ECB3B6 /* HapticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HapticsManager.swift; sourceTree = "<group>"; };
 		6F40F08527457A3C00F74258 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		6F40F087274582D600F74258 /* FavoritosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritosViewController.swift; sourceTree = "<group>"; };
 		6F40F0892745832800F74258 /* ConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationViewController.swift; sourceTree = "<group>"; };
@@ -50,8 +57,7 @@
 		6F40F09127467CAD00F74258 /* UIView+Constraints2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints2.swift"; sourceTree = SOURCE_ROOT; };
 		6F40F0932746CE5E00F74258 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		6F40F0972747E1C100F74258 /* Date+CurrentMillis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+CurrentMillis.swift"; sourceTree = "<group>"; };
-		6F40F09A2747E2BC00F74258 /* IssLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssLocation.swift; sourceTree = "<group>"; };
-		6F40F09C2747E2DF00F74258 /* Satellite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Satellite.swift; sourceTree = "<group>"; };
+		6F40F09C2747E2DF00F74258 /* ISS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISS.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +76,7 @@
 			children = (
 				2376A474274426C800ECB3B6 /* Nano7App */,
 				2376A473274426C800ECB3B6 /* Products */,
+				2376A4A02747F1DA00ECB3B6 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -84,6 +91,8 @@
 		2376A474274426C800ECB3B6 /* Nano7App */ = {
 			isa = PBXGroup;
 			children = (
+				2376A4A82747F38100ECB3B6 /* Delegates */,
+				2376A4A52747F32100ECB3B6 /* Protocols */,
 				6F40F0992747E29F00F74258 /* Models */,
 				6F40F0962747E19900F74258 /* Extensions */,
 				6F40F09127467CAD00F74258 /* UIView+Constraints2.swift */,
@@ -92,7 +101,6 @@
 				2376A48C274434FE00ECB3B6 /* Utilities */,
 				2376A475274426C800ECB3B6 /* AppDelegate.swift */,
 				2376A477274426C800ECB3B6 /* SceneDelegate.swift */,
-				2376A479274426C800ECB3B6 /* ViewController.swift */,
 				2376A481274426C900ECB3B6 /* Assets.xcassets */,
 				2376A483274426C900ECB3B6 /* LaunchScreen.storyboard */,
 				2376A486274426C900ECB3B6 /* Info.plist */,
@@ -104,27 +112,35 @@
 		2376A48C274434FE00ECB3B6 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				2376A4AF2747F82000ECB3B6 /* HapticsManager.swift */,
 				2376A48D2744354C00ECB3B6 /* IssAPI.swift */,
 				6F40F0932746CE5E00F74258 /* UserDefaultsManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		2376A4922746CFA400ECB3B6 /* Models */ = {
+		2376A4A02747F1DA00ECB3B6 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				2376A4932746CFB800ECB3B6 /* Satellite.swift */,
-				2376A4952746D01000ECB3B6 /* IssLocation.swift */,
 			);
-			path = Models;
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
-		2376A4972746D03900ECB3B6 /* Extensions */ = {
+		2376A4A52747F32100ECB3B6 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				2376A4982746D06900ECB3B6 /* Date+CurrentMillis.swift */,
+				2376A4A62747F34C00ECB3B6 /* Toggleble.swift */,
+				2376A4AB2747F47F00ECB3B6 /* Satellite.swift */,
 			);
-			path = Extensions;
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		2376A4A82747F38100ECB3B6 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				2376A4A92747F39A00ECB3B6 /* ConfigurationDelegate.swift */,
+			);
+			path = Delegates;
 			sourceTree = "<group>";
 		};
 		6F40F084274579FF00F74258 /* Controller */ = {
@@ -133,6 +149,7 @@
 				6F40F08527457A3C00F74258 /* TabBar.swift */,
 				6F40F087274582D600F74258 /* FavoritosViewController.swift */,
 				6F40F0892745832800F74258 /* ConfigurationViewController.swift */,
+				2376A479274426C800ECB3B6 /* MapViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -165,8 +182,10 @@
 		6F40F0992747E29F00F74258 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				6F40F09A2747E2BC00F74258 /* IssLocation.swift */,
-				6F40F09C2747E2DF00F74258 /* Satellite.swift */,
+				6F40F09C2747E2DF00F74258 /* ISS.swift */,
+				2376A4A12747F2AD00ECB3B6 /* TableSection.swift */,
+				2376A4A32747F2E100ECB3B6 /* Row.swift */,
+				2376A4AD2747F74700ECB3B6 /* IssLocation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -241,25 +260,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6F40F08D2745977300F74258 /* ConfiguracaoView.swift in Sources */,
-				2376A4992746D06900ECB3B6 /* Date+CurrentMillis.swift in Sources */,
-				2376A4942746CFB800ECB3B6 /* Satellite.swift in Sources */,
 				6F40F08D2745977300F74258 /* ConfigurationViews.swift in Sources */,
-				2376A47A274426C800ECB3B6 /* ViewController.swift in Sources */,
-				6F40F09B2747E2BC00F74258 /* IssLocation.swift in Sources */,
+				2376A4AA2747F39A00ECB3B6 /* ConfigurationDelegate.swift in Sources */,
+				6F40F08D2745977300F74258 /* ConfigurationViews.swift in Sources */,
+				2376A47A274426C800ECB3B6 /* MapViewController.swift in Sources */,
+				2376A4B02747F82000ECB3B6 /* HapticsManager.swift in Sources */,
 				6F40F088274582D600F74258 /* FavoritosViewController.swift in Sources */,
-				2376A4962746D01000ECB3B6 /* IssLocation.swift in Sources */,
+				2376A4A22747F2AD00ECB3B6 /* TableSection.swift in Sources */,
 				2376A480274426C800ECB3B6 /* Nano7App.xcdatamodeld in Sources */,
+				2376A4A72747F34C00ECB3B6 /* Toggleble.swift in Sources */,
 				6F40F0902745C59A00F74258 /* ConfigurationTableViewCell.swift in Sources */,
 				2376A48E2744354C00ECB3B6 /* IssAPI.swift in Sources */,
 				6F40F0982747E1C100F74258 /* Date+CurrentMillis.swift in Sources */,
+				2376A4A42747F2E100ECB3B6 /* Row.swift in Sources */,
 				6F40F09227467CAD00F74258 /* UIView+Constraints2.swift in Sources */,
 				6F40F08627457A3C00F74258 /* TabBar.swift in Sources */,
 				6F40F0942746CE5E00F74258 /* UserDefaultsManager.swift in Sources */,
-				6F40F09D2747E2DF00F74258 /* Satellite.swift in Sources */,
+				6F40F09D2747E2DF00F74258 /* ISS.swift in Sources */,
+				2376A4AE2747F74700ECB3B6 /* IssLocation.swift in Sources */,
 				2376A476274426C800ECB3B6 /* AppDelegate.swift in Sources */,
 				6F40F08A2745832800F74258 /* ConfigurationViewController.swift in Sources */,
 				2376A478274426C800ECB3B6 /* SceneDelegate.swift in Sources */,
+				2376A4AC2747F47F00ECB3B6 /* Satellite.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

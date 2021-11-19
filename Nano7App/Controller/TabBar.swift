@@ -9,7 +9,7 @@ import UIKit
 
 class TabBar: UITabBarController {
 //    //MARK:- Variable
-        let HEIGHT_TAB_BAR:CGFloat = 100
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,17 +28,14 @@ class TabBar: UITabBarController {
     }
     override func viewDidLayoutSubviews() {
            super.viewDidLayoutSubviews()
-           var tabFrame = self.tabBar.frame
-           tabFrame.size.height = HEIGHT_TAB_BAR
-           tabFrame.origin.y = self.view.frame.size.height - HEIGHT_TAB_BAR
-           self.tabBar.frame = tabFrame
+        
        }
 
     
     func setupVCs() {
         viewControllers = [
-            createNavController(for: FavoritosViewController(), title: NSLocalizedString("Favoritos", comment: ""), image: UIImage(systemName: "heart")!),
-            createNavController(for: ViewController(), title: NSLocalizedString("Track ISS", comment: ""), image: UIImage(systemName: "globe")!),
+//            createNavController(for: FavoritosViewController(), title: NSLocalizedString("Favoritos", comment: ""), image: UIImage(systemName: "heart")!),
+            createNavController(for: MapViewController(), title: NSLocalizedString("Mapa", comment: ""), image: UIImage(systemName: "globe")!),
             createNavController(for: ConfigurationViewController(), title: NSLocalizedString("Configuração", comment: ""), image: UIImage(systemName: "gearshape")!)
         ]
     }
@@ -49,10 +46,9 @@ class TabBar: UITabBarController {
                                          title: String,
                                          image: UIImage) -> UIViewController {
         let navController = UINavigationController(rootViewController: rootViewController)
-//        navController.tabBarItem.title = title
+        navController.tabBarItem.title = title
         navController.tabBarItem.image = image
         navController.navigationBar.prefersLargeTitles = true
-        rootViewController.navigationItem.title = title
         
         return navController
     }

@@ -1,14 +1,14 @@
 //
-//  IssLocation.swift
+//  Satellite.swift
 //  Nano7App
 //
-//  Created by Igor Samoel da Silva on 19/11/21.
+//  Created by Igor Samoel da Silva on 18/11/21.
 //
 
 import Foundation
+import CoreLocation
 
-
-struct IssLocation: Satellite {
+struct ISS: Satellite {
     var name: String
     
     var id: Int
@@ -37,3 +37,4 @@ struct IssLocation: Satellite {
     
     
 }
+

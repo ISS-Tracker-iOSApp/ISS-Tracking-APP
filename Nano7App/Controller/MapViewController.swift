@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class ViewController: UIViewController,UIGestureRecognizerDelegate {
+class MapViewController: UIViewController,UIGestureRecognizerDelegate {
     
     
     var issAnnotationView: MKAnnotationView?
@@ -197,7 +197,7 @@ class ViewController: UIViewController,UIGestureRecognizerDelegate {
 }
 
 
-extension ViewController: MKMapViewDelegate {
+extension MapViewController: MKMapViewDelegate {
     
     //function to show custom pin at map
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -243,7 +243,7 @@ extension ViewController: MKMapViewDelegate {
 
 
 
-extension ViewController: CLLocationManagerDelegate {
+extension MapViewController: CLLocationManagerDelegate {
     //New Locations from user device
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
