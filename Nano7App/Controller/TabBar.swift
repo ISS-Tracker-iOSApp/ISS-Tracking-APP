@@ -8,7 +8,7 @@
 import UIKit
 
 class TabBar: UITabBarController {
-    //MARK:- Variable
+//    //MARK:- Variable
         let HEIGHT_TAB_BAR:CGFloat = 100
     override func viewDidLoad() {
         super.viewDidLoad()
