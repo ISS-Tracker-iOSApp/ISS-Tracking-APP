@@ -17,7 +17,7 @@ class ConfiguracaoViewController: UITableViewController {
         super.viewDidLoad()
         
         // Teste
-        self.view.backgroundColor = .gray
+        self.view.backgroundColor = UIColor.init(named: "tabBar-icon-unselected")
     }
     
 

@@ -58,13 +58,14 @@ class ViewController: UIViewController,UIGestureRecognizerDelegate {
         setISSRegion()
         configureLocation()
         
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         // show iss regin in map
         setISSRegion()
+        
     }
-    
     
     
     ///Method that center in iss location
