@@ -13,7 +13,7 @@ class FavoritosViewController: UIViewController {
         super.viewDidLoad()
         
         // Teste
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = UIColor.init(named: "tabBar-icon-unselected")
     }
     
 
