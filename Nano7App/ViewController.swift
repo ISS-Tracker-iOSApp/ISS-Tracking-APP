@@ -59,17 +59,17 @@ class ViewController: UIViewController,UIGestureRecognizerDelegate {
         updateIssLocation()
         setISSRegion()
         configureLocation()
-        
+      
         let tap = UILongPressGestureRecognizer(target: self, action: #selector(recognizeLongPress(_:)))
         tap.minimumPressDuration = 0.5
         
-        map.addGestureRecognizer(tap)
-        
+        map.addGestureRecognizer(tap)        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         // show iss regin in map
         setISSRegion()
+        
     }
 
     
@@ -94,7 +94,6 @@ class ViewController: UIViewController,UIGestureRecognizerDelegate {
         map.addAnnotation(myPin)
         self.isPin.toggle()
        }
-    
     
     ///Method that center in iss location
     private func setISSRegion() {
