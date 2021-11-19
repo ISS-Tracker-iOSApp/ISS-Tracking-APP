@@ -88,7 +88,7 @@ class ConfigurationViewController: UIViewController {
     
     //MARK: Actions
     @objc func toggleHapticsClicked(_ sender: UIButton) {
-        print("Patrão: Aha, vou delegar! Severino...")
+        print("Partão: Oba, vou delegar! Severino...")
         self.delegate?.toggleHapticsClicked()
     }
 }
