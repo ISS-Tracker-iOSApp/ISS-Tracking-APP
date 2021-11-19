@@ -7,6 +7,7 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
 class ViewController: UIViewController,UIGestureRecognizerDelegate {
     var pinsPlaced: [MKPointAnnotation] = []
@@ -15,6 +16,8 @@ class ViewController: UIViewController,UIGestureRecognizerDelegate {
     let issPointAnnotation = MKPointAnnotation()
     var imagemSatelite: UIImage?
     var isPin: Bool = false
+    let locationManager = CLLocationManager()
+
     
     lazy var popUp: UIView = {
         let popUp = UIView(frame: CGRect(x: -300, y: -300, width: 224, height: 200))
@@ -49,9 +52,13 @@ class ViewController: UIViewController,UIGestureRecognizerDelegate {
         
         //Add MapView Delegate
         map.delegate = self
+        
+        //Add LocationManager Delegate
+        locationManager.delegate = self
+        
         updateIssLocation()
         setISSRegion()
-        updateOrbitPathOverlays()
+        configureLocation()
         
         let tap = UILongPressGestureRecognizer(target: self, action: #selector(recognizeLongPress(_:)))
         tap.minimumPressDuration = 0.5
@@ -94,6 +101,18 @@ class ViewController: UIViewController,UIGestureRecognizerDelegate {
         self.map.setRegion(MKCoordinateRegion(center: self.issPointAnnotation.coordinate, latitudinalMeters: CLLocationDistance(8000000), longitudinalMeters: 8000000), animated: true)
     }
     
+    
+    private func configureLocation() {
+        if CLLocationManager.locationServicesEnabled() {
+            self.locationManager.requestLocation()
+            self.locationManager.requestAlwaysAuthorization()
+            self.locationManager.startUpdatingLocation()
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            self.locationManager.allowsBackgroundLocationUpdates = true
+            self.map.showsUserLocation = true
+        }
+        
+    }
     
     
     
@@ -152,7 +171,8 @@ class ViewController: UIViewController,UIGestureRecognizerDelegate {
             IssAPI.shared.request { iss in
                 DispatchQueue.main.async {
                     self.issPointAnnotation.coordinate = iss.getCoordinate()
-                    self.label.text = "Nome: \(iss.name.uppercased())\nLatitude: \(iss.latitude)\nLongitude: \(iss.longitude)\nAltitude: \(iss.altitude)\nVelocidade: \(iss.velocity)\nVisibilidade: \(iss.visibility)\nPegadas: \(iss.footprint)"
+                    self.label.text = "Nome: \(iss.name.uppercased())\nLatitude: \(iss.latitude)\nLongitude: \(iss.longitude)\nAltitude: \(iss.altitude)\nVelocidade: \(iss.velocity)\nVisibilidade: \(iss.visibility)\nPegadas: \(iss.footprint)\n"
+                        self.updateOrbitPathOverlays()
                 }
             }
         }
@@ -161,25 +181,28 @@ class ViewController: UIViewController,UIGestureRecognizerDelegate {
     }
     
     
+    
+    
+    
+    
     func updateOrbitPathOverlays() {
         
         //Create overlay: https://stackoverflow.com/questions/44581445/how-to-plot-satellite-ground-track-on-to-a-map-projection-in-swift
+       
         IssAPI.shared.requestISSOrbit { locations in
-            
             var coordinates: [CLLocationCoordinate2D] = []
             locations.forEach { location in
                 coordinates.append(location.getCoordinate())
             }
-            
             let polyline = MKGeodesicPolyline(coordinates: coordinates, count: coordinates.count)
             DispatchQueue.main.async {
                 self.map.removeOverlays(self.map.overlays)
                 self.map.addOverlay(polyline)
             }
-  
+            
         }
-           
-       }
+        
+    }
     
     
     
@@ -207,7 +230,6 @@ extension ViewController: MKMapViewDelegate {
         }
         
         var annotationView = map.dequeueReusableAnnotationView(withIdentifier: "custom")
-        
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "custom")
             
@@ -242,8 +264,23 @@ extension ViewController: MKMapViewDelegate {
             polylineRenderer.strokeColor = UIColor.red
             polylineRenderer.lineWidth = 2
             return polylineRenderer
-    }
+        }
         return MKOverlayRenderer()
     }
 }
 
+
+extension ViewController: CLLocationManagerDelegate {
+    //New Locations from user device
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+    }
+    
+    
+    //Resquest location fail
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        debugPrint("Erro")
+    }
+    
+    
+}
