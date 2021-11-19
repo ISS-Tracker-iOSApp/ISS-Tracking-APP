@@ -8,12 +8,15 @@
 import UIKit
 
 class TabBar: UITabBarController {
+//    //MARK:- Variable
+        let HEIGHT_TAB_BAR:CGFloat = 100
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tabBar.isTranslucent = false
-        self.tabBar.barTintColor = UIColor.black // tab bar icon tint color
-        self.tabBar.backgroundColor = .gray
+        self.tabBar.backgroundColor = UIColor(named: "tabBar-icon-background")!
+        self.tabBar.tintColor = UIColor.init(named: "tabBar-icon-selected")
+        self.tabBar.unselectedItemTintColor = UIColor.init(named: "tabBar-icon-unselected")
         
         view.backgroundColor = .systemBackground
         UITabBar.appearance().barTintColor = .systemBackground
@@ -23,13 +26,20 @@ class TabBar: UITabBarController {
         
         
     }
-    
+    override func viewDidLayoutSubviews() {
+           super.viewDidLayoutSubviews()
+           var tabFrame = self.tabBar.frame
+           tabFrame.size.height = HEIGHT_TAB_BAR
+           tabFrame.origin.y = self.view.frame.size.height - HEIGHT_TAB_BAR
+           self.tabBar.frame = tabFrame
+       }
+
     
     func setupVCs() {
         viewControllers = [
             createNavController(for: FavoritosViewController(), title: NSLocalizedString("Favoritos", comment: ""), image: UIImage(systemName: "heart")!),
-            createNavController(for: ViewController(), title: NSLocalizedString("Track ISS", comment: ""), image: UIImage(named: "tab-icon-sat")!),
-            createNavController(for: ConfiguracaoViewController(), title: NSLocalizedString("Configuração", comment: ""), image: UIImage(systemName: "gearshape")!)
+            createNavController(for: ViewController(), title: NSLocalizedString("Track ISS", comment: ""), image: UIImage(systemName: "globe")!),
+            createNavController(for: ConfigurationViewController(), title: NSLocalizedString("Configuração", comment: ""), image: UIImage(systemName: "gearshape")!)
         ]
     }
     
@@ -47,14 +57,14 @@ class TabBar: UITabBarController {
         return navController
     }
     
-    
-    
-    /*
-     // Only override draw() if you perform custom drawing.
-     // An empty implementation adversely affects performance during animation.
-     override func draw(_ rect: CGRect) {
-     // Drawing code
-     }
-     */
-    
 }
+
+
+//extension UITabBar {
+//    override open func sizeThatFits(size: CGSize) -> CGSize {
+//        super.sizeThatFits(size)
+//        var sizeThatFits = super.sizeThatFits(size)
+//        sizeThatFits.height = 71
+//        return sizeThatFits
+//    }
+//}
