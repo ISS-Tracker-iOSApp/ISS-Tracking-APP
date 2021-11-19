@@ -38,8 +38,8 @@ protocol ConfigurationDelegate {
 }
 
 
-class ConfiguracaoViewController: UIViewController {
-    let tableConfiguration = ConfiguracaoView().tableView
+class ConfigurationViewController: UIViewController {
+    let tableConfiguration = ConfigurationViews().tableView
     
     
     // 1) To create new Configuration Row, insert new element in the array below;
@@ -93,7 +93,7 @@ class ConfiguracaoViewController: UIViewController {
     }
 }
 
-extension ConfiguracaoViewController: UITableViewDataSource {
+extension ConfigurationViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44.0
     }
@@ -163,7 +163,7 @@ extension ConfiguracaoViewController: UITableViewDataSource {
     
 }
 
-extension ConfiguracaoViewController: UITableViewDelegate {
+extension ConfigurationViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {
             print("if indexPath.section == 0 && indexPath.row == 0 {")

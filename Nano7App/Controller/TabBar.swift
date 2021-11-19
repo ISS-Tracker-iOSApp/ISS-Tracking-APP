@@ -39,7 +39,7 @@ class TabBar: UITabBarController {
         viewControllers = [
             createNavController(for: FavoritosViewController(), title: NSLocalizedString("Favoritos", comment: ""), image: UIImage(systemName: "heart")!),
             createNavController(for: ViewController(), title: NSLocalizedString("Track ISS", comment: ""), image: UIImage(systemName: "globe")!),
-            createNavController(for: ConfiguracaoViewController(), title: NSLocalizedString("Configuração", comment: ""), image: UIImage(systemName: "gearshape")!)
+            createNavController(for: ConfigurationViewController(), title: NSLocalizedString("Configuração", comment: ""), image: UIImage(systemName: "gearshape")!)
         ]
     }
     
