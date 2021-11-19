@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ConfigurationViews: UIView {
+class ConfiguracaoView: UIView {
     
     lazy var iconView: UIImageView = {
         let ico = UIImageView()
@@ -17,7 +17,6 @@ class ConfigurationViews: UIView {
     
     lazy var textView: UILabel = {
         let txt = UILabel()
-        txt.text = "Teste"
         return txt
     }()
     
@@ -28,10 +27,7 @@ class ConfigurationViews: UIView {
     }()
     
     
-    lazy var tableView: UITableView = {
-        let tbl = UITableView()
-        return tbl
-    }()
+    
     
     /*
     // Only override draw() if you perform custom drawing.
