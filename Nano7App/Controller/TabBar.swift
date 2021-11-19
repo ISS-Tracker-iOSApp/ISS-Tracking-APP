@@ -14,9 +14,9 @@ class TabBar: UITabBarController {
         super.viewDidLoad()
         
         self.tabBar.isTranslucent = false
-//        self.tabBar.backgroundColor = UIColor(named: "tabBar-icon-background")!
-//        self.tabBar.tintColor = UIColor.init(named: "tabBar-icon-selected")
-//        self.tabBar.unselectedItemTintColor = UIColor.init(named: "tabBar-icon-unselected")
+        self.tabBar.backgroundColor = UIColor(named: "tabBar-icon-background")!
+        self.tabBar.tintColor = UIColor.init(named: "tabBar-icon-selected")
+        self.tabBar.unselectedItemTintColor = UIColor.init(named: "tabBar-icon-unselected")
         
         view.backgroundColor = .systemBackground
         UITabBar.appearance().barTintColor = .systemBackground
