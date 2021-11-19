@@ -8,20 +8,12 @@
 import Foundation
 
 class UserDefaultsManager: ConfigurationDelegate {
-    
-    //TODO: Implement UseDefault sigleton
-//    static let shared = UserDefaultSingleton()
-//    static var hapticsIsOn = true
-//    private let configurationVC = ConfiguracaoViewController()
-//    var delegate: ToggleHapticsDelegate?
+    //FIXME: Removed most of the implementation for clarity
     
     func toggleHapticsClicked() {
-        print("Severino: Opa, patrão, pra já!")
-//        UserDefaultSingleton.hapticsIsOn.toggle()
-//        if UserDefaultSingleton.hapticsIsOn {
-//            print("Haptics is ON")
-//        } else {
-//            print("Haptics is OFF")
-//        }
+        var userDefaultValue: Bool = UserDefaults.standard.bool(forKey: "isHapticsEnabled")
+        UserDefaults.standard.set(userDefaultValue.toggle(), forKey: "sound")
+
+        print("Severino: Opa, patrão, já terminei!")
     }
 }

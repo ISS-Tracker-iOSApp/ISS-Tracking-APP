@@ -24,7 +24,6 @@ struct Row {
 
 protocol Toggleble {
     var toggle: UISwitch? { get set }
-    //    mutating func setTarget(buttonTarget: Any?, buttonAction: Selector, buttonEvent: UIControl.Event)
 }
 
 extension Toggleble {
@@ -50,45 +49,51 @@ class ConfigurationViewController: UIViewController {
     //      d) implement the method to perform the delegation
     var arraySection: [TableSection] = [
         TableSection(title: "GERAL", rows: [
-            Row(icon: UIImage(systemName: "iphone.radiowaves.left.and.right"), text: "Reduce Animations", toggle: nil),
-            Row(icon: UIImage(systemName: "iphone.badge.play"), text: "Haptics", toggle: nil, selector: #selector(toggleHapticsClicked(_:)))
-        ], cell: ConfigurationCellIconTextToggle.self),
-        TableSection(title: "MAPA", rows: [
-            Row(icon: UIImage(systemName: "location"), text: "Large Map Annotations", toggle: nil)
-        ], cell: ConfigurationCellIconTextToggle.self),
-        TableSection(title: "RECURSOS", rows: [
-            Row(icon: nil, text: "TrackISS Github repo", toggle: nil),
-            Row(icon: nil, text: "Open-Notify ApI", toggle: nil),
-            Row(icon: nil, text: "Where the ISS at? API", toggle: nil),
-            Row(icon: nil, text: "NASA Image and Video Library API", toggle: nil)
-        ], cell: ConfiguracoesCellText.self),
-        TableSection(title: "", rows: [
-            Row(icon: UIImage(systemName: "person"), text: "Developers", toggle: nil),
-            Row(icon: UIImage(systemName: "dollarsign.circle"), text: "Leave a tip", toggle: nil)
-        ], cell: ConfiguracoesCellIconText.self)
+//            Row(icon: UIImage(systemName: "iphone.badge.play"), text: "Reduce Animations", toggle: nil),
+            Row(icon: UIImage(systemName: "iphone.radiowaves.left.and.right"), text: "Haptics", toggle: nil, selector: #selector(toggleHapticsClicked(_:)))
+        ], cell: ConfigurationCellIconTextToggle.self)//,
+//        TableSection(title: "MAPA", rows: [
+//            Row(icon: UIImage(systemName: "location"), text: "Large Map Annotations", toggle: nil)
+//        ], cell: ConfigurationCellIconTextToggle.self),
+//        TableSection(title: "RECURSOS", rows: [
+//            Row(icon: nil, text: "TrackISS Github repo", toggle: nil),
+//            Row(icon: nil, text: "Open-Notify ApI", toggle: nil),
+//            Row(icon: nil, text: "Where the ISS at? API", toggle: nil),
+//            Row(icon: nil, text: "NASA Image and Video Library API", toggle: nil)
+//        ], cell: ConfiguracoesCellText.self),
+//        TableSection(title: "", rows: [
+//            Row(icon: UIImage(systemName: "person"), text: "Developers", toggle: nil),
+//            Row(icon: UIImage(systemName: "dollarsign.circle"), text: "Leave a tip", toggle: nil)
+//        ], cell: ConfiguracoesCellIconText.self)
     ]
     
     //MARK: Delegate
     var delegate: ConfigurationDelegate?
-    var userDefaultVC: UserDefaultsManager = UserDefaultsManager()
+    var userDefaultManager: UserDefaultsManager = UserDefaultsManager()
     
     //MARK: Lyfe cycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
+        self.delegate = userDefaultManager
+        
+        self.tableConfiguration.dataSource = self
+        self.tableConfiguration.delegate   = self
+    
         self.view.addSubview(self.tableConfiguration)
         self.tableConfiguration.addConstraintAndConstant(with: self.view, centerX: 0, bottom: 0, leading: 0, trailing: 0)
         self.tableConfiguration.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 150).isActive = true
         
-        self.tableConfiguration.dataSource = self
-        self.tableConfiguration.delegate   = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        self.delegate = userDefaultVC
     }
     
     //MARK: Actions
     @objc func toggleHapticsClicked(_ sender: UIButton) {
-        print("Partão: Oba, vou delegar! Severino...")
+        print("Patrão: Oba, vou delegar! Severino...")
         self.delegate?.toggleHapticsClicked()
     }
 }
@@ -116,15 +121,10 @@ extension ConfigurationViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: ConfigurationCellIconTextToggle.identifier) as! ConfigurationCellIconTextToggle
             cell.generalIcon.image = arraySection[indexPath.section].rows[indexPath.row].icon
             cell.generalText.text = arraySection[indexPath.section].rows[indexPath.row].text
-            // Toggles Action
-//            switch cell.generalText.text {
-//                case "Haptics":
+            
             if arraySection[indexPath.section].rows[indexPath.row].selector != nil {
                 cell.generalToggle.addTarget(self, action: arraySection[indexPath.section].rows[indexPath.row].selector!, for: .touchUpInside)
             }
-//            default:
-//                print("Deu ruim")
-//            }
             
             return cell
             

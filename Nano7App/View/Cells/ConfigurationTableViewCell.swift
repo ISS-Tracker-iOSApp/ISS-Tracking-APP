@@ -30,13 +30,14 @@ class ConfigurationCellIconTextToggle: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        self.generalIcon.tintColor = UIColor(named: "tabBar-icon-unselected")!
+        self.generalText.textColor = UIColor(named: "tabBar-icon-unselected")!
         // Configure the view for the selected state
         self.contentView.addSubview(self.generalIcon)
         self.contentView.addSubview(self.generalText)
         self.contentView.addSubview(self.generalToggle)
         
-        self.generalIcon.addConstraintAndConstant(with: self.contentView, centerY: 0, leading: self.contentSize.width * 0.045918, width: self.contentSize.width * 0.153061)
+        self.generalIcon.addConstraintAndConstant(with: self.contentView, centerY: 0, leading: self.contentSize.width * 0.045918, width: self.contentSize.width * 0.103061)
         self.generalToggle.addConstraintAndConstant(with: self.contentView, centerY: 0, trailing: self.contentSize.width * -0.045918, width: self.contentSize.width * 0.153061)
         self.generalText.addConstraintAndConstant(with: self.contentView, top: 0, bottom: 0)
         self.generalText.leadingAnchor.constraint(equalTo: self.generalIcon.trailingAnchor, constant: self.contentSize.width * 0.045918).isActive = true
@@ -78,9 +79,6 @@ class ConfiguracoesCellText: UITableViewCell {
         self.textReduceAnimation.addConstraintAndConstant(with: self.contentView, centerY: 0, leading: self.contentSize.width * 0.045918, trailing: self.contentSize.width * 0.045918)
     }
 }
-
-
-
 
 
 class ConfiguracoesCellIconText: UITableViewCell {
