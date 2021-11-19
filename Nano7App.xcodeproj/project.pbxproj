@@ -353,7 +353,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 272983AP33;
+
+				DEVELOPMENT_TEAM = MGFPJ5C76T;
+
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Nano7App/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Isso permite que você saiba sua localização em relação a ISS";
@@ -383,7 +385,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 272983AP33;
+
+				DEVELOPMENT_TEAM = MGFPJ5C76T;
+
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Nano7App/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Isso permite que você saiba sua localização em relação a ISS";

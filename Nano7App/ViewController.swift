@@ -10,12 +10,14 @@ import MapKit
 import CoreLocation
 
 class ViewController: UIViewController,UIGestureRecognizerDelegate {
-    
-    
+    var pinsPlaced: [MKPointAnnotation] = []
+    //pro toque
     var issAnnotationView: MKAnnotationView?
     let issPointAnnotation = MKPointAnnotation()
     var imagemSatelite: UIImage?
+    var isPin: Bool = false
     let locationManager = CLLocationManager()
+
     
     lazy var popUp: UIView = {
         let popUp = UIView(frame: CGRect(x: -300, y: -300, width: 224, height: 200))
@@ -57,8 +59,11 @@ class ViewController: UIViewController,UIGestureRecognizerDelegate {
         updateIssLocation()
         setISSRegion()
         configureLocation()
+      
+        let tap = UILongPressGestureRecognizer(target: self, action: #selector(recognizeLongPress(_:)))
+        tap.minimumPressDuration = 0.5
         
-        
+        map.addGestureRecognizer(tap)        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,7 +71,29 @@ class ViewController: UIViewController,UIGestureRecognizerDelegate {
         setISSRegion()
         
     }
+
     
+    @objc private func recognizeLongPress(_ sender: UILongPressGestureRecognizer) {
+        for pin in pinsPlaced {
+            map.removeAnnotation(pin)
+        }
+        guard sender.state != UIGestureRecognizer.State.began else{
+            return
+        }
+        let location = sender.location(in: map)
+        let myCoordinate: CLLocationCoordinate2D = map.convert(location, toCoordinateFrom: map)
+        
+        //let teste: MKMarkerAnnotationView = MKMarkerAnnotationView()
+        
+        let myPin: MKPointAnnotation = MKPointAnnotation()
+        myPin.coordinate = myCoordinate
+        myPin.title = "Pin"
+        
+
+        self.pinsPlaced.append(myPin)
+        map.addAnnotation(myPin)
+        self.isPin.toggle()
+       }
     
     ///Method that center in iss location
     private func setISSRegion() {
@@ -86,13 +113,6 @@ class ViewController: UIViewController,UIGestureRecognizerDelegate {
         
     }
     
-    
-    //Function to adding custom pin
-    private func addCustomPin(){
-        let pin = MKPointAnnotation()
-        pin.title = "ISS here"
-        map.addAnnotation(pin)
-    }
     
     
     func setupImage(_ annotation: MKAnnotationView){
@@ -202,6 +222,8 @@ extension ViewController: MKMapViewDelegate {
     
     //function to show custom pin at map
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    
+        
         guard !(annotation is MKUserLocation) else {
             return nil
         }
@@ -216,10 +238,14 @@ extension ViewController: MKMapViewDelegate {
             annotationView?.annotation = annotation
         }
         
-        annotationView?.image = UIImage(named: "IssIcon")
-        
-        self.issAnnotationView = annotationView
-        self.imagemSatelite = annotationView?.image
+        if self.isPin{
+            annotationView?.image = UIImage(named: "cosmonauta")
+            self.isPin.toggle()
+        }else{
+            annotationView?.image = UIImage(named: "IssIcon")
+            self.issAnnotationView = annotationView
+            self.imagemSatelite = annotationView?.image
+        }
         
         if self.issAnnotationView != nil{
             self.setupImage(self.issAnnotationView!)
@@ -241,7 +267,6 @@ extension ViewController: MKMapViewDelegate {
         return MKOverlayRenderer()
     }
 }
-
 
 
 extension ViewController: CLLocationManagerDelegate {
