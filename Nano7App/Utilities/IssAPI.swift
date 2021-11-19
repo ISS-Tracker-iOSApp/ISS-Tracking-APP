@@ -20,9 +20,7 @@ final class IssAPI {
         }
         return timestamps
     }
-    
-    
-    
+
     ///Method that request datas from issAPI
     func request(completion: @escaping (ISS) -> Void ) {
         let session = URLSession.shared
@@ -43,7 +41,8 @@ final class IssAPI {
                     let datas = try JSONDecoder().decode(ISS.self, from: data)
                     completion(datas)
                 } catch {
-                    print("Deu ruim")
+                    print("Error")
+                    return
                 }
             } else {
                 return
@@ -75,6 +74,7 @@ final class IssAPI {
                     completion(datas)
                 } catch let error {
                     print(error.localizedDescription)
+                    return
                 }
             } else {
                 return
