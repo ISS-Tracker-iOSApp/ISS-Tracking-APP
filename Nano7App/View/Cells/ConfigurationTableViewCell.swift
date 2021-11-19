@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ConfiguracoesCellIconTextToggle: UITableViewCell {
+class ConfigurationCellIconTextToggle: UITableViewCell {
     class var identifier: String {
         return String(describing: self)
     }
@@ -19,9 +19,9 @@ class ConfiguracoesCellIconTextToggle: UITableViewCell {
             return self.contentView.frame.size
     }
     
-    let generalIcon   = ConfiguracaoViews().iconView
-    let generalText   = ConfiguracaoViews().textView
-    let generalToggle = ConfiguracaoViews().toggleView
+    let generalIcon   = ConfigurationViews().iconView
+    let generalText   = ConfigurationViews().textView
+    let generalToggle = ConfigurationViews().toggleView
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -65,9 +65,9 @@ class ConfiguracoesCellText: UITableViewCell {
             return self.contentView.frame.size
     }
     
-    let iconReduceAnimation   = ConfiguracaoViews().iconView
-    let textReduceAnimation   = ConfiguracaoViews().textView
-    let toggleReduceAnimation = ConfiguracaoViews().toggleView
+    let iconReduceAnimation   = ConfigurationViews().iconView
+    let textReduceAnimation   = ConfigurationViews().textView
+    let toggleReduceAnimation = ConfigurationViews().toggleView
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -105,9 +105,9 @@ class ConfiguracoesCellIconText: UITableViewCell {
             return self.contentView.frame.size
     }
     
-    let iconReduceAnimation   = ConfiguracaoViews().iconView
-    let textReduceAnimation   = ConfiguracaoViews().textView
-    let toggleReduceAnimation = ConfiguracaoViews().toggleView
+    let iconReduceAnimation   = ConfigurationViews().iconView
+    let textReduceAnimation   = ConfigurationViews().textView
+    let toggleReduceAnimation = ConfigurationViews().toggleView
     
     override func awakeFromNib() {
         super.awakeFromNib()

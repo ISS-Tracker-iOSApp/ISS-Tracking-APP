@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ConfiguracaoViews: UIView {
+class ConfigurationViews: UIView {
     
     lazy var iconView: UIImageView = {
         let ico = UIImageView()
